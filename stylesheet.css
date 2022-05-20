@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'LOGX-10';
+    src: url('LOGX-10-Regular.eot');
+    src: local('LOGX-10 Regular'), local('LOGX-10-Regular'),
+        url('LOGX-10-Regular.eot?#iefix') format('embedded-opentype'),
+        url('LOGX-10-Regular.woff2') format('woff2'),
+        url('LOGX-10-Regular.woff') format('woff'),
+        url('LOGX-10-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
