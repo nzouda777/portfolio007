@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./LOGX-10-Regular.woff">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend:{
+                    colors:{
+                        'background-second': 'rgb(44, 45, 50)',
+                        background: 'rgb(50, 51, 56)',
+                        second: 'rgb(20, 253, 32)',
+                    },
+                    fontFamily: {
+                        log: ['LOGX-10-Regular','serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <title>Rodrigue | Blogs</title>
+</head>
+<body class="bg-background-second mx-auto ">
+    <div class="lg:columns-5 md:columns-3 sm:columns-1 gap-3 sm:w-screen lg:w-[1200px] md:w-screen space-y-3 mx-auto  pb-28" >
+        <div class="bg-background break-inside-avoid rounded-xl">
+            <img class='rounded-xl mb-5' src="data:image/jpeg;base64,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" alt="" srcset="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/71/c1/af/71c1afaae6ae7a6c804d9906f56daae2.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/7f/2b/95/7f2b95835ec11e362c46e84a6e2300d4.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/b7/cc/b7/b7ccb7cceb28326f104077b9e9de90e9.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/56/49/0f/56490fea4a94ec1773b16db8c9c049d1.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img src="https://i.pinimg.com/236x/ac/6e/df/ac6edf488080d71723b8ff4428f9a07c.jpg" alt="" class="rounded-xl">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img src="https://i.pinimg.com/236x/32/d9/07/32d9079f6a1ce18681dd0ba3b649d4f7.jpg" alt="" class="rounded-xl mb-5">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/4b/4c/d1/4b4cd10c58cd744ae534087575228f51.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background rounded-xl break-inside-avoid">
+            <img class="rounded-xl mb-5" src="https://i.pinimg.com/236x/fd/3c/d5/fd3cd531e0417332ea5e8eaf9496854f.jpg" alt="">
+            <div class="space-y-3  p-3">
+                <h3 class="element text-lg text-second">La Berline</h3>
+                <div class="small-desc">
+                    <p class="text-white">
+                        la berline c'est une dur voiture tu doutes ?
+                    </p>
+                </div>
+                <div class="flex justify-end">
+                    <a href="./blog.html" class="bg-transparent border border-second hover:text-background hover:bg-second text-white hover:text-gray-700 p-1 px-4 rounded-full">
+                        lire
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
