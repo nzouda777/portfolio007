@@ -51,8 +51,23 @@ if (isset($_POST['submit'])) {
         $success = 'le champs a ete rempli';
         $headers = 'MIME-Version: 1.0' . '\r\n';
         $headers .= 'From: '. $email . '<' . $email . '>' . '\r\n' . 'reply-to:' . $email . '\r\n' . 'X-Mailer: PHP/' . phpversion();
-       $send = @mail('rodriguenzouda35@gmail.com', $object, $msg, $headers);
-       if ($send) {
+            require_once './phpmailer/class.phpmailer.php';
+            require_once './phpmailer/class.smtp.php';
+            #require_once './phpmailer/PHPMailerAutoload.php';
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = 'smtp.mailtrap.io';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->Port = 2525;
+        $phpmailer->Username = '6fcca140e39649';
+        $phpmailer->Password = '4b3d9472fd2bf2';
+        $phpmailer->From = $email;
+        $phpmailer->FromName = $name;
+        $phpmailer->Subject = $object;
+        $phpmailer->AltBody = $msg;
+        $phpmailer->MsgHTML($msg);
+        $phpmailer->AddAddress('rodriguenzouda35@gmail.com', 'Rodrigue NZOUDA');
+        if ($phpmailer->send()) {
         # code...
         require_once './database.php';
         $SQL = 'INSERT INTO contacts set full_name=?, email=?, objet=?, mail_msg=?';
@@ -60,11 +75,16 @@ if (isset($_POST['submit'])) {
             $name, $email, $object, $msg
         );
         request($SQL, $PARAMS);
-        @mail($email , 'Confirmation de reception d\'email', 'Merci d\'avoir rempli ce formulaire de contact. je vous recontacte dans un bref delai', $headers);
+        $phpmailer->FromName = 'Rodrigue NZOUDA';
+        $phpmailer->Subject = 'Confirmation de reception d\'email';
+        $phpmailer->AltBody = 'Merci d\'avoir rempli ce formulaire de contact. je vous recontacte dans un bref delai';
+        $phpmailer->MsgHTML('Merci d\'avoir rempli ce formulaire de contact. je vous recontacte dans un bref delai');
+        $phpmailer->AddAddress($email, $name);
+        $phpmailer->send();
 
        } else {
         # code...
-        echo 'echec' . $send . var_dump($send);
+        echo $phpmailer->ErrorInfo;
        }
     }
 } else {
