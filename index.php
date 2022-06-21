@@ -1,3 +1,78 @@
+<?php
+if (isset($_POST['submit'])) {
+    # code...
+    $errors = [];
+    if(!isset($_POST['full_name']) || isset($_POST['full_name']) && empty($_POST['full_name']) ){
+        $errors['full_name'] = 'ce champs est requis';
+    }elseif (isset($_POST['full_name'])) {
+        if (strlen($_POST['full_name']) < 3) {
+            # code...
+            $errors['full_name'] = 'le nom est trop court';
+        }else {
+            $name = $_POST['full_name'];
+        }
+    }
+    if(!isset($_POST['email']) || isset($_POST['email']) && empty($_POST['email']) ){
+        $errors['email'] = 'ce champs est requis';
+    }elseif (isset($_POST['email'])) {
+        $pattern = "^[_a-z0-9]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
+    
+        if (!preg_match($pattern, $_POST['email'])) {
+            $errors['email'] = 'le mail est incorect';
+        }else {
+            $email = $_POST['email'];
+        }
+        
+    }
+    if(!isset($_POST['object']) || isset($_POST['object']) && empty($_POST['object']) ){
+        $errors['object'] = 'ce champs est requis';
+    }elseif (isset($_POST['object'])) {
+        if (strlen($_POST['object']) < 15) {
+            # code...
+            $errors['object'] = 'l\'objet est trop court';
+        }else {
+            $object = $_POST['object'];
+        }
+    }
+    if(!isset($_POST['message']) || isset($_POST['message']) && empty($_POST['message']) ){
+        $errors['message'] = 'ce champs est requis';
+    }elseif (isset($_POST['message'])) {
+        if (str_word_count($_POST['message']) < 10) {
+            # code...
+            $errors['message'] = 'le message est tres court';
+        }else{
+            $msg = $_POST['message'];
+        }
+    }
+    if (count($errors) > 0) {
+        
+    } else {
+        # code...
+        $success = 'le champs a ete rempli';
+        $headers = 'MIME-Version: 1.0' . '\r\n';
+        $headers .= 'From: '. $email . '<' . $email . '>' . '\r\n' . 'reply-to:' . $email . '\r\n' . 'X-Mailer: PHP/' . phpversion();
+       $send = @mail('rodriguenzouda35@gmail.com', $object, $msg, $headers);
+       if ($send) {
+        # code...
+        require_once './database.php';
+        $SQL = 'INSERT INTO contacts set full_name=?, email=?, objet=?, mail_msg=?';
+        $PARAMS = array(
+            $name, $email, $object, $msg
+        );
+        request($SQL, $PARAMS);
+        @mail($email , 'Confirmation de reception d\'email', 'Merci d\'avoir rempli ce formulaire de contact. je vous recontacte dans un bref delai', $headers);
+
+       } else {
+        # code...
+        echo 'echec' . $send . var_dump($send);
+       }
+    }
+} else {
+    # code...
+}
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -324,7 +399,7 @@
         <div class="small-desc px-3 lg:px-32 md:text-center  text-lg text-white mt-4 md:px-32  text-center">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. rupti, deleniti expedita tempore sit voluptate molestias incidunt excepturi labore? Optio cum facilis .
         </div>
-        <div class="grid grid-cols-5 gap-2  relative py-16">
+        <div class="grid grid-cols-5 gap-2  relative pt-16">
             <a href="wa.me/+237654818785" class="contact-btn ml-5 bg-background-second block m-1 p-3">
                 <div class="text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill="currentColor" d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608a17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42a18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zm10.762.135a.5.5 0 0 1 .708 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 0 1-.708-.708L14.293 4H9.5a.5.5 0 0 1 0-1h4.793l-1.647-1.646a.5.5 0 0 1 0-.708z"/></svg>
@@ -365,6 +440,70 @@
                     Rodrigue NZOUDA
                 </div>
             </a>
+        </div>
+        <div class="flex justify-end mt-3">
+            <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+                <div class="flex ">
+                    <div id="client">
+                        <div class=" flex flex-col mx-2">
+                            <label for="" class="text-second">Nom & Prenom</label>
+                            <input type="text" name="full_name" class="focus:ring-second focus:ring-1 text-xl text-second px-2 bg-background-second outline-none h-12 w-60 " id="">
+                           <?php
+                          if (isset($errors) && isset($errors['full_name'])) {
+                            ?>
+                                <div id="email-text-error" class="text-sm text-red-500 font-bold">
+                                    <?= $errors['full_name'] ?>                     
+                               </div>
+                            <?php
+                          }
+                           ?>
+                        </div>
+                    </div>
+                    <div class="flex flex-col mx-2">
+                        <label for="" class="text-second">E-mail</label>
+                        <input type="email" name="email" class=" outline-none h-12 w-60 focus:ring-second focus:ring-1 text-xl text-second px-2 bg-background-second" id="">
+                        <?php
+                          if (isset($errors) && isset($errors['email'])) {
+                            ?>
+                                <div id="email-text-error" class="text-sm text-red-500 font-bold">
+                                    <?= $errors['email'] ?>                     
+                               </div>
+                            <?php
+                          }
+                           ?>
+                    </div>
+                    </div>
+                    <div id="object" class="my-3 mx-2 flex flex-col">
+                        <label for="" class="text-second">Objet</label>
+                        <input type="text" name="object" class=" outline-none h-12 w-auto bg-background-second focus:ring-second focus:ring-1 text-xl text-second px-2" id="">
+                        <?php
+                          if (isset($errors) && isset($errors['object'])) {
+                            ?>
+                                <div id="email-text-error" class="text-sm text-red-500 font-bold">
+                                    <?= $errors['object'] ?>                     
+                               </div>
+                            <?php
+                          }
+                           ?>
+                    </div>
+                    <div id="content" class="mx-2 flex flex-col">
+                        <label for="" class="text-second">Entrer Votre Message</label>
+                        <textarea name="message" class="outline-none h-52 w-auto bg-background-second focus:ring-second focus:ring-1 text-xl text-second px-2" id="" cols="30" rows="10"></textarea>
+                        <?php
+                          if (isset($errors) && isset($errors['message'])) {
+                            ?>
+                                <div id="email-text-error" class="text-sm text-red-500 font-bold">
+                                    <?= $errors['message'] ?>                     
+                               </div>
+                            <?php
+                          }
+                           ?>
+                    </div>
+                    <div class="mx-2 my-4">
+                        <input name="submit" type="submit" value="Submit" class="bg-background-second text-second px-4 border-second border hover:text-background-second hover:bg-second py-2 text-lg">
+                    </div>
+                </div>
+            </form>
         </div>
     </footer>
     <script src="./assets/js/app.js"></script>
